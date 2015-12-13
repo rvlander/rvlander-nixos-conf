@@ -30,6 +30,7 @@
     atom
 
     firefoxWrapper
+    thunderbird
     numix-gtk-theme
     numix-icon-theme
     numix-icon-theme-circle
@@ -58,6 +59,7 @@
     evince
 
     bash
+    duplicity
   ];
 
   services.xserver.displayManager.sessionCommands = "${pkgs.networkmanagerapplet}/bin/nmapplet &";
@@ -84,6 +86,8 @@
   services.xserver.desktopManager.gnome3.enable = true;
 
   services.xserver.windowManager.i3.enable = true;
+  services.xserver.windowManager.i3.configFile = ./i3.config;
+  environment.etc."i3status.conf".source = ./i3status.conf;
 
   # System wide zsh
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";
