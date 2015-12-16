@@ -44,6 +44,7 @@
     vagrant
 
     gnome3.dconf
+    gnome3.gnome_settings_daemon
     networkmanagerapplet
     arandr
     pidgin
