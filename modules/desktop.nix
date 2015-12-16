@@ -30,6 +30,7 @@
     atom
 
     firefoxWrapper
+    chromium
     thunderbird
     numix-gtk-theme
     numix-icon-theme
@@ -50,6 +51,7 @@
     nodejs
     nodePackages.nodemon
     nodePackages.mocha
+    nodePackages.gulp
 
     pgadmin
     postgresql94
@@ -60,6 +62,10 @@
 
     bash
     duplicity
+    xautolock
+    xorg.xbacklight
+
+    pavucontrol
   ];
 
   services.xserver.displayManager.sessionCommands = "${pkgs.networkmanagerapplet}/bin/nmapplet &";
@@ -81,13 +87,16 @@
   services.xserver.synaptics.enable = true;
   services.xserver.synaptics.twoFingerScroll = true;
 
+  #does not work
+  services.xserver.synaptics.palmDetect = true;
+
   # Enable the KDE Desktop Environment.
   services.xserver.displayManager.kdm.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
 
   services.xserver.windowManager.i3.enable = true;
-  services.xserver.windowManager.i3.configFile = ./i3.config;
   environment.etc."i3status.conf".source = ./i3status.conf;
+  environment.etc."i3/config".source = ./i3.config;
 
   # System wide zsh
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";
