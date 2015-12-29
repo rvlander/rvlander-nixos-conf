@@ -66,6 +66,8 @@
     xautolock
     xorg.xbacklight
 
+    matter-compiler
+
     pavucontrol
   ];
 
