@@ -28,6 +28,8 @@
 
     git
     atom
+    blender
+    apg
 
     firefoxWrapper
     chromium
@@ -68,7 +70,10 @@
 
     matter-compiler
 
+    sshuttle
+
     pavucontrol
+    python2
   ];
 
   services.xserver.displayManager.sessionCommands = "${pkgs.networkmanagerapplet}/bin/nmapplet &";
@@ -86,6 +91,7 @@
   # services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.enable = true;
   services.xserver.layout = "fr";
+  services.xserver.xkbVariant = "oss";
   services.xserver.xkbOptions = "eurosign:e";
   services.xserver.synaptics.enable = true;
   services.xserver.synaptics.twoFingerScroll = true;
@@ -96,6 +102,8 @@
   # Enable the KDE Desktop Environment.
   services.xserver.displayManager.kdm.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
+
+  services.teamviewer.enable = true;
 
   services.xserver.windowManager.i3.enable = true;
   environment.etc."i3status.conf".source = ./i3status.conf;
@@ -123,4 +131,12 @@
   # sudo
   security.sudo.enable = true;
 
+  nixpkgs = {
+    config = {
+      git = {
+        svnSupport = true;
+      };
+      allowUnfree = true;
+    };
+  };
 }
