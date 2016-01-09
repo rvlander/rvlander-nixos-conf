@@ -74,7 +74,12 @@
 
     pavucontrol
     python2
+
+    steam
   ];
+
+  hardware.opengl.driSupport32Bit = true;
+  hardware.pulseaudio.support32Bit = true;
 
   services.xserver.displayManager.sessionCommands = "${pkgs.networkmanagerapplet}/bin/nmapplet &";
 
@@ -127,6 +132,11 @@
   # system.autoUpgrade.enable = true;
   # system.autoUpgrade.channel = https://nixos.org/channels/nixos-unstable;
 
+
+  #screen hot plug with i3
+  services.udev.extraRules = ''
+    ACTION=="change", SUBSYSTEM=="drm", RUN+="${./monitor-hotplug.sh}"
+  '';
 
   # sudo
   security.sudo.enable = true;
