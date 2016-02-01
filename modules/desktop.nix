@@ -62,6 +62,7 @@
     htop
     gparted
     evince
+    gimp
 
     bash
     duplicity
@@ -75,7 +76,18 @@
     pavucontrol
     python2
 
+    cargo
+    rustc
+    racerRust
+
     steam
+    libreoffice
+
+    bundler
+    bundix
+    unzip
+
+    cmakeWithGui
   ];
 
   hardware.opengl.driSupport32Bit = true;
@@ -84,6 +96,7 @@
   services.xserver.displayManager.sessionCommands = "${pkgs.networkmanagerapplet}/bin/nmapplet &";
 
   programs.zsh.enable = true;
+  programs.bash.enableCompletion = true;
 
   # List services that you want to enable:
 
@@ -118,6 +131,7 @@
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
   services.virtualboxHost.enable = true;
+  services.virtualboxHost.addNetworkInterface = true;
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "unstable";
@@ -141,12 +155,51 @@
   # sudo
   security.sudo.enable = true;
 
+  services.xserver.vaapiDrivers = [ pkgs.vaapiIntel ];
+
   nixpkgs = {
     config = {
+      /*packageOverrides = pkgs:
+      let
+        bundlerGem = { buildRubyGem, makeWrapper, ruby, coreutils }:
+        buildRubyGem {
+          name = "bundler-1.9.10";
+          namePrefix = "";
+          sha256 = "0ygpfvk51x96a8r3jknx7vf6afabxqp8byayvkka3rqkwv0jssqs";
+          dontPatchShebangs = true;
+          postInstall = ''
+          find $out -type f -perm -0100 | while read f; do
+            substituteInPlace $f \
+              --replace "/usr/bin/env" "${coreutils}/bin/env"
+          done
+
+              wrapProgram $out/bin/bundler \
+              --prefix PATH ":" ${ruby}/bin
+              '';
+            };
+            in
+            rec {
+              bundlerEnv = pkgs.bundlerEnv.override {
+                bundler_HEAD = bundlerGem {
+                  buildRubyGem = pkgs.buildRubyGem;
+                  makeWrapper = pkgs.makeWrapper;
+                  ruby = pkgs.ruby;
+                  coreutils = pkgs.coreutils;
+                };
+              };
+            };*/
       git = {
         svnSupport = true;
       };
       allowUnfree = true;
+      firefox = {
+        enableGoogleTalkPlugin = true;
+      };
+
+      chromium = {
+        enablePepperFlash = true; # Chromium removed support for Mozilla (NPAPI) plugins so Adobe Flash no longer works
+        enablePepperPDF = true;
+      };
     };
   };
 }
